@@ -22,7 +22,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/{link}',function($link){
-  $data = file_get_contents($link);
-  return htmlspecialchars($data);
+  $client = new \GuzzleHttp\Client(['verify'=>false]);
+  $request = $client->get($link,[
+      // 'timeout' => 15,
+      // 'headers' => $headers,
+      // 'cookies' => $cookieJar
+  ],[]);
+
+  // $data = file_get_contents($link);
+  return htmlspecialchars($request->getBody());
 })->where(['link'=>'(.*)']);
 // Route::get('/home', 'HomeController@index')->name('home');
