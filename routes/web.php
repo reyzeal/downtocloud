@@ -22,6 +22,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/{link}',function($link){
-  return $link;
+  $data = file_get_contents($link);
+  return htmlspecialchars($data);
 })->where(['link'=>'(.*)']);
 // Route::get('/home', 'HomeController@index')->name('home');
